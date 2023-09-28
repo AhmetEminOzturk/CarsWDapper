@@ -67,3 +67,5 @@ C:\GitHub\CarsWDapper\CarsWDapper.WebApi\obj\Debug\net6.0\refint\CarsWDapper.Web
 C:\GitHub\CarsWDapper\CarsWDapper.WebApi\obj\Debug\net6.0\CarsWDapper.WebApi.pdb
 C:\GitHub\CarsWDapper\CarsWDapper.WebApi\obj\Debug\net6.0\CarsWDapper.WebApi.genruntimeconfig.cache
 C:\GitHub\CarsWDapper\CarsWDapper.WebApi\obj\Debug\net6.0\ref\CarsWDapper.WebApi.dll
+C:\GitHub\CarsWDapper\CarsWDapper.WebApi\bin\Debug\net6.0\AutoMapper.dll
+C:\GitHub\CarsWDapper\CarsWDapper.WebApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
