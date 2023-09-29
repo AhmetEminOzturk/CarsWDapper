@@ -22,6 +22,12 @@ namespace CarsWDapper.WebApi.Controllers
             var values = await _vehicleService.TGetList();
             return Ok(values);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicleById(int id)
+        {
+            var values = await _vehicleService.TGetById(id);
+            return Ok(values);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateVehicle(CreateVehicleRequest createVehicleRequest)
         {

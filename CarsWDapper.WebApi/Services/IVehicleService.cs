@@ -9,6 +9,6 @@ namespace CarsWDapper.WebApi.Services
         Task TDelete(int id);
         Task TUpdate(UpdateVehicleRequest updateVehicleRequest);
         Task<List<DisplayVehicleResponse>> TGetList();
-        Task<DisplayVehicleResponse> TGetById(int id);
+        Task<List<DisplayVehicleResponse>> TGetById(int id);
     }
 }

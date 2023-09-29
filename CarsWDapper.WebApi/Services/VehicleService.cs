@@ -28,9 +28,10 @@ namespace CarsWDapper.WebApi.Services
             await _dbConnection.ExecuteAsync("delete from Vehicles where VehicleId=@VehicleId",new { VehicleId= id});
         }
 
-        public Task<DisplayVehicleResponse> TGetById(int id)
+        public async Task<List<DisplayVehicleResponse>> TGetById(int id)
         {
-            throw new NotImplementedException();
+            var value = await _dbConnection.QueryAsync<DisplayVehicleResponse>("select * from Vehicles where VehicleId=@VehicleId", new { VehicleId = id });
+            return (_mapper.Map<List<DisplayVehicleResponse>>(value));
         }
 
         public async Task<List<DisplayVehicleResponse>> TGetList()
