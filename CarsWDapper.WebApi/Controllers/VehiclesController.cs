@@ -22,6 +22,21 @@ namespace CarsWDapper.WebApi.Controllers
             var values = await _vehicleService.TGetList();
             return Ok(values);
         }
+
+        [HttpGet , Route ("{action=GetMostPopularPlates}")]
+        public async Task<IActionResult> GetMostPopularPlates()
+        {
+            var values = await _vehicleService.TGetMostPopularPlates();
+            return Ok(values);
+        }
+
+        [HttpGet , Route("{action2=GetLeastPlates}")]
+        public async Task<IActionResult> GetLeastPlates()
+        {
+            var values = await _vehicleService.TGetLeastPlates();
+            return Ok(values);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicleById(int id)
         {

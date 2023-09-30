@@ -5,6 +5,7 @@ using CarsWDapper.WebApi.Dtos.Responses;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace CarsWDapper.WebApi.Services
 {
@@ -34,9 +35,21 @@ namespace CarsWDapper.WebApi.Services
             return (_mapper.Map<List<DisplayVehicleResponse>>(value));
         }
 
+        public async Task<List<DisplayVehicleResponse>> TGetLeastPlates()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>("SELECT TOP 5[CityNr] , Count(*) FROM Vehicles WHERE[CityNr] <> '0' GROUP BY[CityNr] Order BY COUNT(*) ASC");
+            return (_mapper.Map<List<DisplayVehicleResponse>>(values));          
+        }
+
         public async Task<List<DisplayVehicleResponse>> TGetList()
         {
             var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>("select * from Vehicles");
+            return (_mapper.Map<List<DisplayVehicleResponse>>(values));
+        }
+
+        public async Task<List<DisplayVehicleResponse>> TGetMostPopularPlates()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>("SELECT TOP 5 [CityNr], COUNT(*) FROM Vehicles GROUP BY [CityNr] ORDER BY COUNT(*) DESC;");
             return (_mapper.Map<List<DisplayVehicleResponse>>(values));
         }
 
