@@ -35,10 +35,40 @@ namespace CarsWDapper.WebApi.Services
             return (_mapper.Map<List<DisplayVehicleResponse>>(value));
         }
 
-        public async Task<List<DisplayVehicleResponse>> TGetLeastPlates()
+        public async Task<List<DisplayBrandResponse>> TGetLeastBrands()
         {
-            var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>("SELECT TOP 5[CityNr] , Count(*) FROM Vehicles WHERE[CityNr] <> '0' GROUP BY[CityNr] Order BY COUNT(*) ASC");
-            return (_mapper.Map<List<DisplayVehicleResponse>>(values));          
+            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 5 [Brand] , Count(*) FROM Vehicles WHERE [Brand] <> 'string' GROUP BY [Brand] Order BY COUNT(*) ASC;");
+            return (_mapper.Map<List<DisplayBrandResponse>>(values));
+        }
+
+        public async Task<List<DisplayCaseTypeResponse>> TGetLeastCaseType()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayCaseTypeResponse>("SELECT TOP 1 [CaseType] , Count(*) FROM Vehicles WHERE [CaseType] <> 'string' GROUP BY [CaseType] Order BY COUNT(*) ASC;");
+            return (_mapper.Map<List<DisplayCaseTypeResponse>>(values));
+        }
+
+        public async Task<List<DisplayColorResponse>> TGetLeastColor()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayColorResponse>("SELECT TOP 1 [Color] , Count(*) FROM Vehicles WHERE [Color] <> 'string' GROUP BY [Color] Order BY COUNT(*) ASC;");
+            return (_mapper.Map<List<DisplayColorResponse>>(values));
+        }
+
+        public async Task<List<DisplayFuelResponse>> TGetLeastFuel()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayFuelResponse>("SELECT TOP 1 [Fuel] , Count(*) FROM Vehicles WHERE [Fuel] <> 'string' GROUP BY [Fuel] Order BY COUNT(*) ASC;");
+            return (_mapper.Map<List<DisplayFuelResponse>>(values));
+        }
+
+        public async Task<List<DisplayCityNrResponse>> TGetLeastPlates()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5[CityNr] , Count(*) FROM Vehicles WHERE[CityNr] <> '0' GROUP BY[CityNr] Order BY COUNT(*) ASC");
+            return (_mapper.Map<List<DisplayCityNrResponse>>(values));
+        }
+
+        public async Task<List<DisplayShiftTypeResponse>> TGetLeastShiftType()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayShiftTypeResponse>("SELECT TOP 1 [ShiftType] , Count(*) FROM Vehicles WHERE [ShiftType] <> 'string' GROUP BY [ShiftType] Order BY COUNT(*) ASC;");
+            return (_mapper.Map<List<DisplayShiftTypeResponse>>(values));
         }
 
         public async Task<List<DisplayVehicleResponse>> TGetList()
@@ -47,10 +77,40 @@ namespace CarsWDapper.WebApi.Services
             return (_mapper.Map<List<DisplayVehicleResponse>>(values));
         }
 
-        public async Task<List<DisplayVehicleResponse>> TGetMostPopularPlates()
+        public async Task<List<DisplayBrandResponse>> TGetMostPopularBrands()
         {
-            var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>("SELECT TOP 5 [CityNr], COUNT(*) FROM Vehicles GROUP BY [CityNr] ORDER BY COUNT(*) DESC;");
-            return (_mapper.Map<List<DisplayVehicleResponse>>(values));
+            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 5 [Brand], COUNT(*) FROM Vehicles GROUP BY [Brand] ORDER BY COUNT(*) DESC;");
+            return (_mapper.Map<List<DisplayBrandResponse>>(values));
+        }
+
+        public async Task<List<DisplayCaseTypeResponse>> TGetMostPopularCaseType()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayCaseTypeResponse>("SELECT TOP 1 [CaseType], COUNT(*) FROM Vehicles WHERE [CaseType] <> 'string' GROUP BY [CaseType] ORDER BY COUNT(*) DESC;");
+            return (_mapper.Map<List<DisplayCaseTypeResponse>>(values));
+        }
+
+        public async Task<List<DisplayColorResponse>> TGetMostPopularColor()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayColorResponse>("SELECT TOP 1 [Color], COUNT(*) FROM Vehicles WHERE [Color] <> 'string' GROUP BY [Color] ORDER BY COUNT(*) DESC;;");
+            return (_mapper.Map<List<DisplayColorResponse>>(values));
+        }
+
+        public async Task<List<DisplayFuelResponse>> TGetMostPopularFuel()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayFuelResponse>("SELECT TOP 1 [Fuel], COUNT(*) FROM Vehicles WHERE [Fuel] <> 'string' GROUP BY [Fuel] ORDER BY COUNT(*) DESC;");
+            return (_mapper.Map<List<DisplayFuelResponse>>(values));
+        }
+
+        public async Task<List<DisplayCityNrResponse>> TGetMostPopularPlates()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5 [CityNr], COUNT(*) FROM Vehicles GROUP BY [CityNr] ORDER BY COUNT(*) DESC;");
+            return (_mapper.Map<List<DisplayCityNrResponse>>(values));
+        }
+
+        public async Task<List<DisplayShiftTypeResponse>> TGetMostPopularShiftType()
+        {
+            var values = await _dbConnection.QueryAsync<DisplayShiftTypeResponse>("SELECT TOP 1 [ShiftType], COUNT(*) FROM Vehicles GROUP BY [ShiftType] ORDER BY COUNT(*) DESC;");
+            return (_mapper.Map<List<DisplayShiftTypeResponse>>(values));
         }
 
         public async Task TInsert(CreateVehicleRequest createVecihleRequest)

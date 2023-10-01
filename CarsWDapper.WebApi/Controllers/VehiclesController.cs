@@ -23,17 +23,81 @@ namespace CarsWDapper.WebApi.Controllers
             return Ok(values);
         }
 
-        [HttpGet , Route ("{action=GetMostPopularPlates}")]
+        [HttpGet ("[controller]/[action]")]
         public async Task<IActionResult> GetMostPopularPlates()
         {
             var values = await _vehicleService.TGetMostPopularPlates();
             return Ok(values);
         }
-
-        [HttpGet , Route("{action2=GetLeastPlates}")]
+        [HttpGet ("[controller]/[action]")]
         public async Task<IActionResult> GetLeastPlates()
         {
             var values = await _vehicleService.TGetLeastPlates();
+            return Ok(values);
+        }
+
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetMostPopularBrands()
+        {
+            var values = await _vehicleService.TGetMostPopularBrands();
+            return Ok(values);
+        }
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetLeastBrands()
+        {
+            var values = await _vehicleService.TGetLeastBrands();
+            return Ok(values);
+        }
+        
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetMostPopularShiftType()
+        {
+            var values = await _vehicleService.TGetMostPopularShiftType();
+            return Ok(values);
+        }
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetLeastShiftType()
+        {
+            var values = await _vehicleService.TGetLeastShiftType();
+            return Ok(values);
+        }
+
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetMostPopularFuel()
+        {
+            var values = await _vehicleService.TGetMostPopularFuel();
+            return Ok(values);
+        }
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetLeastFuel()
+        {
+            var values = await _vehicleService.TGetLeastFuel();
+            return Ok(values);
+        }
+
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetMostPopularCaseType()
+        {
+            var values = await _vehicleService.TGetMostPopularCaseType();
+            return Ok(values);
+        }
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetLeastCaseType()
+        {
+            var values = await _vehicleService.TGetLeastCaseType();
+            return Ok(values);
+        }
+
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetMostPopularColor()
+        {
+            var values = await _vehicleService.TGetMostPopularColor();
+            return Ok(values);
+        }
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> GetLeastColor()
+        {
+            var values = await _vehicleService.TGetLeastColor();
             return Ok(values);
         }
 
