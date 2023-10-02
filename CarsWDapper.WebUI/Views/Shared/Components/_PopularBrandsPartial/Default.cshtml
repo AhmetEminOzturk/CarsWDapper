@@ -1,0 +1,110 @@
+﻿@model List<DisplayBrandResponse>
+
+<div class="col-12 col-lg-8 col-xl-8">
+    <div class="card">
+        <div class="card-header">
+            En Çok Kullanılan Araba Markaları
+        </div>
+        <div class="card-body">
+            <div class="chart-container-1">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+
+        <div class="row m-0 row-group text-center border-top border-light-3">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-lg-4">
+                    <div class="p-3">
+                        <h5 class="mb-0">@item.Brand</h5>
+                        <small class="mb-0">@item.Count Adet</small>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<script>
+    const xmlhttp1 = new XMLHttpRequest();
+    const url1 = 'https://localhost:7255/api/Vehicles/Vehicles/GetMostPopularBrands';
+    xmlhttp1.open('Get', url1, true);
+    xmlhttp1.send();
+
+    xmlhttp1.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const datapoints = JSON.parse(this.responseText);
+
+
+
+            const labelbrands = datapoints.map(function (index) {
+                return index.brand;
+            });
+
+            const countdata = datapoints.map(function (index) {
+                return index.count;
+            });
+
+            console.log(labelbrands);
+            console.log(countdata);
+
+            var ctx = document.getElementById('chart1').getContext('2d');
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labelbrands,
+                    datasets: [{
+                        label: 'En Çok Kullanılan Araba Markaları',
+                        data: countdata,
+                        backgroundColor: '#fff',
+                        borderColor: "transparent",
+                        pointRadius: "0",
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false,
+                        labels: {
+                            fontColor: '#ddd',
+                            boxWidth: 40
+                        }
+                    },
+                    tooltips: {
+                        displayColors: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: '#ddd'
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(221, 221, 221, 0.08)"
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: '#ddd'
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(221, 221, 221, 0.08)"
+                            },
+                        }]
+                    }
+
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,98 @@
+﻿@model List<DisplayCityNrResponse>
+
+<div class="col-12 col-lg-4 col-xl-4">
+    <div class="card">
+        <div class="card-header">
+            En Çok Kullanılan Plakalar
+
+        </div>
+        <div class="card-body">
+            <div class="chart-container-2">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @{
+                                string formattedCityNr;
+
+                                if (item.CityNr < 10)
+                                {
+                                    formattedCityNr = "0" + item.CityNr;
+                                }
+                                else
+                                {
+                                    formattedCityNr = item.CityNr.ToString();
+                                }
+                            }
+                            <td>Plaka No: @formattedCityNr</td>
+                            <td>Adet: @item.Count</td>
+                        </tr>
+                    } 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const xmlhttp = new XMLHttpRequest();
+    const url = 'https://localhost:7255/api/Vehicles/Vehicles/GetMostPopularPlates';
+    xmlhttp.open('GET', url, true);
+    xmlhttp.send();
+
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const datapoints = (JSON.parse(this.responseText));
+            //console.log(datapoints);
+            const labelplates = datapoints.map(function (index) {
+                return index.cityNr;
+            });
+
+
+            const countdata = datapoints.map(function (index) {
+                return index.count;
+            });
+
+            console.log(labelplates);
+            console.log(countdata);
+
+            var ctx = document.getElementById("chart2").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labelplates,
+                    datasets: [{
+                        backgroundColor: [
+                            "rgba(255, 255, 255, 0.90)",
+                            "rgba(255, 255, 255, 0.70)",
+                            "rgba(255, 255, 255, 0.50)",
+                            "rgba(255, 255, 255, 0.20)"
+                        ],
+                        data: countdata,
+                        borderWidth: [0, 0, 0, 0, 0]
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: "bottom",
+                        display: false,
+                        labels: {
+                            fontColor: '#ddd',
+                            boxWidth: 15
+                        }
+                    }
+                    ,
+                    tooltips: {
+                        displayColors: false
+                    }
+                }
+            });
+        }
+    }
+</script>

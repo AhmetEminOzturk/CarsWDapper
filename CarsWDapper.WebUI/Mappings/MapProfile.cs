@@ -15,6 +15,9 @@ namespace CarsWDapper.WebUI.Mappings
             CreateMap<Vehicle, DisplayFuelResponse>().ReverseMap();
             CreateMap<Vehicle, DisplayColorResponse>().ReverseMap();
             CreateMap<Vehicle, DisplayShiftTypeResponse>().ReverseMap();
+            CreateMap<Vehicle, DisplayCityNrResponse>().ReverseMap();
+
+            
         }
     }
 }

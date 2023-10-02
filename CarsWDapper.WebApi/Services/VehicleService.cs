@@ -37,7 +37,7 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayBrandResponse>> TGetLeastBrands()
         {
-            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 5 [Brand] , Count(*) FROM Vehicles WHERE [Brand] <> 'string' GROUP BY [Brand] Order BY COUNT(*) ASC;");
+            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 5 [Brand] , Count(*) as Count FROM Vehicles WHERE [Brand] <> 'string' GROUP BY [Brand] Order BY Count ASC;");
             return (_mapper.Map<List<DisplayBrandResponse>>(values));
         }
 
@@ -61,7 +61,7 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayCityNrResponse>> TGetLeastPlates()
         {
-            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5[CityNr] , Count(*) FROM Vehicles WHERE[CityNr] <> '0' GROUP BY[CityNr] Order BY COUNT(*) ASC");
+            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5[CityNr] , Count(*) as Count FROM Vehicles WHERE[CityNr] <> '0' GROUP BY[CityNr] Order BY Count ASC");
             return (_mapper.Map<List<DisplayCityNrResponse>>(values));
         }
 
@@ -79,7 +79,7 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayBrandResponse>> TGetMostPopularBrands()
         {
-            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 5 [Brand], COUNT(*) FROM Vehicles GROUP BY [Brand] ORDER BY COUNT(*) DESC;");
+            var values = await _dbConnection.QueryAsync<DisplayBrandResponse>("SELECT TOP 9 [Brand], COUNT(*) as Count FROM Vehicles GROUP BY [Brand] ORDER BY Count DESC;");
             return (_mapper.Map<List<DisplayBrandResponse>>(values));
         }
 
@@ -103,7 +103,7 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayCityNrResponse>> TGetMostPopularPlates()
         {
-            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5 [CityNr], COUNT(*) FROM Vehicles GROUP BY [CityNr] ORDER BY COUNT(*) DESC;");
+            var values = await _dbConnection.QueryAsync<DisplayCityNrResponse>("SELECT TOP 5 [CityNr], COUNT(*) as Count FROM Vehicles GROUP BY [CityNr] ORDER BY Count DESC;");
             return (_mapper.Map<List<DisplayCityNrResponse>>(values));
         }
 
