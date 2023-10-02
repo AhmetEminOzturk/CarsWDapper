@@ -22,7 +22,12 @@ namespace CarsWDapper.WebApi.Controllers
             var values = await _vehicleService.TGetList();
             return Ok(values);
         }
-
+        [HttpGet("[controller]/[action]")]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            var values = await _vehicleService.TSearch(keyword);
+            return Ok(values);
+        }
         [HttpGet ("[controller]/[action]")]
         public async Task<IActionResult> GetMostPopularPlates()
         {

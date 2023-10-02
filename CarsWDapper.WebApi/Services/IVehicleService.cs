@@ -9,6 +9,7 @@ namespace CarsWDapper.WebApi.Services
         Task TDelete(int id);
         Task TUpdate(UpdateVehicleRequest updateVehicleRequest);
         Task<List<DisplayVehicleResponse>> TGetList();
+        Task<List<DisplayVehicleResponse>> TSearch(string keyword);
         Task<List<DisplayCityNrResponse>> TGetMostPopularPlates();
         Task<List<DisplayCityNrResponse>> TGetLeastPlates();
         Task<List<DisplayBrandResponse>> TGetMostPopularBrands();

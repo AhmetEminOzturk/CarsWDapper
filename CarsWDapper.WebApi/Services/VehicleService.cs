@@ -118,6 +118,30 @@ namespace CarsWDapper.WebApi.Services
              await _dbConnection.ExecuteAsync("insert into Vehicles (CarId,Plate,LicenceDate,CityNr,Title,Brand,Model,Year_,Fuel,ShiftType,MotorVolume,MotorPower,Color,CaseType) Values (@CarId,@Plate,@LicenceDate,@CityNr,@Title,@Brand,@Model,@Year_,@Fuel,@ShiftType,@MotorVolume,@MotorPower,@Color,@CaseType)", createVecihleRequest);                  
         }
 
+        public async Task<List<DisplayVehicleResponse>> TSearch(string keyword)
+        {
+            // You can construct your SQL query here, searching for the keyword in relevant columns.
+            // For example, searching in the 'Title' and 'Brand' columns.
+            string sql = @"SELECT TOP 10 * FROM Vehicles WHERE Title LIKE @Keyword 
+                                                           OR Brand LIKE @Keyword
+                                                           OR Plate LIKE @Keyword
+                                                           OR CityNr LIKE @Keyword 
+                                                           OR ShiftType LIKE @Keyword 
+                                                           OR Fuel LIKE @Keyword 
+                                                           OR CaseType LIKE @Keyword 
+                                                           OR Color LIKE @Keyword";
+
+
+            // Define the parameters for your query.
+            var parameters = new DynamicParameters();
+            parameters.Add("@Keyword", "%" + keyword + "%"); // Add '%' to search for partial matches.
+
+            // Execute the query.
+            var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>(sql, parameters);
+
+            return _mapper.Map<List<DisplayVehicleResponse>>(values);
+        }
+
         public async Task TUpdate(UpdateVehicleRequest updateVehicleRequest)
         {
             string sql= "update Vehicles set CarId=@CarId,Plate=@Plate,LicenceDate=@LicenceDate,CityNr=@CityNr,Title=@Title,Brand=@Brand,Model=@Model,Year_=@Year_,Fuel=@Fuel,ShiftType=@ShiftType,MotorVolume=@MotorVolume,MotorPower=@MotorPower,Color=@Color,CaseType=@CaseType where VehicleId=@VehicleId";
