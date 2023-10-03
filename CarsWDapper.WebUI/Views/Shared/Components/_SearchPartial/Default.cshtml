@@ -1,0 +1,197 @@
+﻿@model List<DisplayVehicleResponse>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Burada gereken CSS veya başlık etiketleri bulunabilir -->
+</head>
+<body>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    Araba Listesi
+                </div>
+
+                <ul class="navbar-nav mr-auto align-items-center">
+                    <li class="nav-item">
+                        <form class="search-bar">
+                            <input type="text" class="form-control" style="margin-top: 5px" placeholder="Anahtar kelimeleri girin" id="keywordInput">
+                            <a href="javascript:void(0);" onclick="searchByKeyword()"><i class="icon-magnifier"></i></a>
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Plaka</th>
+                                <th>Model & Marka</th>
+                                <th>Şase Tipi</th>
+                                <th>Yakıt Türü</th>
+                                <th>Vites Tipi</th>
+                                <th>Renk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="carData">
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="pagination" class="text-center">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const rowsPerPage = 5;
+
+        function getData(keyword) {
+            const xmlhttp3 = new XMLHttpRequest();
+            const url3 = `https://localhost:7255/api/Vehicles/Vehicles/Search?keyword=${keyword}`;
+            xmlhttp3.open('GET', url3, true);
+            xmlhttp3.send();
+
+            xmlhttp3.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const datapoints = JSON.parse(this.responseText);
+                    console.log(datapoints);
+
+                    // Verileri tabloya eklemek için tbody elementini alın
+                    const carDataBody = document.getElementById('carData');
+
+                    // Önceki verileri temizleyin
+                    carDataBody.innerHTML = '';
+
+                    // Sayfa numarasına göre başlangıç ve bitiş indekslerini hesaplayın
+                    const startIndex = (currentPage - 1) * rowsPerPage;
+                    const endIndex = startIndex + rowsPerPage;
+
+                    // Verileri döngü ile tabloya ekleyin
+                    if (datapoints && datapoints.length > 0) {
+                        for (let i = startIndex; i < Math.min(endIndex, datapoints.length); i++) {
+                            const item = datapoints[i];
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                        <td>${item.plate}</td>
+                                        <td>${item.title}</td>
+                                        <td>${item.caseType}</td>
+                                        <td>${item.fuel}</td>
+                                        <td>${item.shiftType}</td>
+                                        <td>${item.color}</td>
+                                    `;
+                            carDataBody.appendChild(row);
+                        }
+                    } else {
+                        // Veri bulunamadıysa bir mesaj gösterin
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="5">Veri bulunamadı</td>';
+                        carDataBody.appendChild(row);
+                    }
+
+                    // Sayfalama bağlantılarını güncelle
+                    updatePagination(datapoints.length);
+                }
+            };
+        }
+
+        // Sayfalama bağlantılarını güncellemek için bir işlev tanımlayın
+        function updatePagination(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            const paginationElement = document.getElementById('pagination');
+            paginationElement.innerHTML = '';
+
+            // Ekranda en fazla 10 sayfa bağlantısı göstermek için başlangıç ve bitiş indekslerini hesaplayın
+            let startPage = Math.max(currentPage - 5, 1);
+            let endPage = Math.min(startPage + 9, totalPages);
+
+            // "En İlk Sayfa" bağlantısı
+            if (currentPage > 1) {
+                const firstPageLink = document.createElement('a');
+                firstPageLink.href = '#';
+                firstPageLink.textContent = 'First';
+                firstPageLink.addEventListener('click', function () {
+                    currentPage = 1;
+                    getData(document.getElementById('keywordInput').value);
+                });
+                paginationElement.appendChild(firstPageLink);
+                paginationElement.appendChild(document.createTextNode(' - '));
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+
+                // Sayfa numaraları arasına '-' işareti ekleyin (son sayfa hariç)
+                if (i < endPage) {
+                    pageLink.textContent += ' - ';
+                }
+
+                pageLink.addEventListener('click', function () {
+                    currentPage = i;
+                    getData(document.getElementById('keywordInput').value);
+                });
+
+                paginationElement.appendChild(pageLink);
+            }
+
+            // "En Son Sayfa" bağlantısı
+            if (currentPage < totalPages) {
+                paginationElement.appendChild(document.createTextNode(' - '));
+                const lastPageLink = document.createElement('a');
+                lastPageLink.href = '#';
+                lastPageLink.textContent = 'Last';
+                lastPageLink.addEventListener('click', function () {
+                    currentPage = totalPages;
+                    getData(document.getElementById('keywordInput').value);
+                });
+                paginationElement.appendChild(lastPageLink);
+            }
+        }
+
+        // Input'a girilen kelimeye göre veriyi almak için bir fonksiyon tanımlayın
+        function searchByKeyword() {
+            currentPage = 1;
+            getData(document.getElementById('keywordInput').value);
+        }
+
+        // Sayfa yüklendiğinde verileri ilk kez almak için çağırın ve sayfalama bağlantılarını oluşturun
+        document.addEventListener('DOMContentLoaded', function () {
+            getData('');
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

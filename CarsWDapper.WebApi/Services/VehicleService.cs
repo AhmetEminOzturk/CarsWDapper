@@ -120,23 +120,17 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayVehicleResponse>> TSearch(string keyword)
         {
-            // You can construct your SQL query here, searching for the keyword in relevant columns.
-            // For example, searching in the 'Title' and 'Brand' columns.
-            string sql = @"SELECT TOP 10 * FROM Vehicles WHERE Title LIKE @Keyword 
+            string sql = @"SELECT TOP 20000 * FROM Vehicles WHERE Title LIKE @Keyword 
                                                            OR Brand LIKE @Keyword
                                                            OR Plate LIKE @Keyword
-                                                           OR CityNr LIKE @Keyword 
                                                            OR ShiftType LIKE @Keyword 
                                                            OR Fuel LIKE @Keyword 
                                                            OR CaseType LIKE @Keyword 
                                                            OR Color LIKE @Keyword";
 
-
-            // Define the parameters for your query.
             var parameters = new DynamicParameters();
-            parameters.Add("@Keyword", "%" + keyword + "%"); // Add '%' to search for partial matches.
+            parameters.Add("@Keyword", "%" + keyword + "%"); 
 
-            // Execute the query.
             var values = await _dbConnection.QueryAsync<DisplayVehicleResponse>(sql, parameters);
 
             return _mapper.Map<List<DisplayVehicleResponse>>(values);

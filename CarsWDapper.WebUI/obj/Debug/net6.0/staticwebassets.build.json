@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fi7ZGxmkHXP3wM0JmQaf3wtLVBj1KvpOqTF7S+iHfIc=",
+  "Hash": "vputYekV8V/ha3nlvcPXii2c5w7jalsN8szPsMtMPig=",
   "Source": "CarsWDapper.WebUI",
   "BasePath": "_content/CarsWDapper.WebUI",
   "Mode": "Default",
@@ -51661,6 +51661,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Template\\assets\\fonts\\weathericons-regular-webfont.woff2"
+    },
+    {
+      "Identity": "C:\\GitHub\\CarsWDapper\\CarsWDapper.WebUI\\wwwroot\\Template\\assets\\images\\aeo.png",
+      "SourceId": "CarsWDapper.WebUI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\GitHub\\CarsWDapper\\CarsWDapper.WebUI\\wwwroot\\",
+      "BasePath": "_content/CarsWDapper.WebUI",
+      "RelativePath": "Template/assets/images/aeo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Template\\assets\\images\\aeo.png"
     },
     {
       "Identity": "C:\\GitHub\\CarsWDapper\\CarsWDapper.WebUI\\wwwroot\\Template\\assets\\images\\bg-themes\\1.png",

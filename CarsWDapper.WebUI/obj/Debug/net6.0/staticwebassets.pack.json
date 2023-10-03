@@ -11913,6 +11913,10 @@
       "PackagePath": "staticwebassets\\Template\\assets\\fonts\\weathericons-regular-webfont.woff2"
     },
     {
+      "Id": "C:\\GitHub\\CarsWDapper\\CarsWDapper.WebUI\\wwwroot\\Template\\assets\\images\\aeo.png",
+      "PackagePath": "staticwebassets\\Template\\assets\\images\\aeo.png"
+    },
+    {
       "Id": "C:\\GitHub\\CarsWDapper\\CarsWDapper.WebUI\\wwwroot\\Template\\assets\\images\\bg-themes\\1.png",
       "PackagePath": "staticwebassets\\Template\\assets\\images\\bg-themes\\1.png"
     },
