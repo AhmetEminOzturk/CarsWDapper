@@ -1,3 +1,5 @@
+using CarsWDapper.WebUI.Context;
+using CarsWDapper.WebUI.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+builder.Services.AddDbContext<EfContext>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

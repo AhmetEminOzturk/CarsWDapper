@@ -120,7 +120,7 @@ namespace CarsWDapper.WebApi.Services
 
         public async Task<List<DisplayVehicleResponse>> TSearch(string keyword)
         {
-            string sql = @"SELECT TOP 20000 * FROM Vehicles WHERE Title LIKE @Keyword 
+            string sql = @"SELECT * FROM Vehicles WHERE Title LIKE @Keyword 
                                                            OR Brand LIKE @Keyword
                                                            OR Plate LIKE @Keyword
                                                            OR ShiftType LIKE @Keyword 
