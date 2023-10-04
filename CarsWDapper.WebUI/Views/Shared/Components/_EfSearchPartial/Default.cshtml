@@ -1,0 +1,105 @@
+﻿@model List<DisplayVehicleResponse>
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    EntityFramework Verileri
+                </div>
+
+                <ul class="navbar-nav mr-auto align-items-center">
+                    <li class="nav-item">
+                        <form method="get" asp-action"InvokeAsync" asp-controller="_EfSearchPartial" class="search-bar">
+                            <input type="text" class="form-control" style="margin-top: 5px" placeholder="Anahtar kelimeleri girin" id="keywordInputEf">
+                            <a href="#" onclick="searchByKeywordEf()"><i class="icon-magnifier"></i></a>
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Plaka</th>
+                                <th>Model & Marka</th>
+                                <th>Şase Tipi</th>
+                                <th>Yakıt Türü</th>
+                                <th>Vites Tipi</th>
+                                <th>Renk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="carData2">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Plate</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.CaseType</td>
+                                    <td>@item.Fuel</td>
+                                    <td>@item.ShiftType</td>
+                                    <td>@item.Color</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="pagination" class="text-center">
+                </div>
+
+                
+                <div id="loadingTimeEf">Veri alma süresi: Bekleniyor...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchByKeywordEf() {
+            // Anahtar kelimeyi al
+            var keyword = document.getElementById("keywordInputEf").value;
+
+            // AJAX isteği oluştur
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/_EfSearchPartial/InvokeAsync", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            // Veri alma süresi göstergesini güncelle
+            document.getElementById("loadingTimeEf").innerText = "Veri alma süresi: İstek gönderiliyor...";
+
+            // İstek gönderildiğinde
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Yanıt başarılı geldiğinde
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Verileri güncelle
+                    var carData2 = document.getElementById("carData2");
+                    carData2.innerHTML = ""; // Önceki verileri temizle
+                    for (var i = 0; i < response.length; i++) {
+                        var item = response[i];
+                        var row = document.createElement("tr");
+                        row.innerHTML = `
+                                <td>${item.Plate}</td>
+                                <td>${item.Title}</td>
+                                <td>${item.CaseType}</td>
+                                <td>${item.Fuel}</td>
+                                <td>${item.ShiftType}</td>
+                                <td>${item.Color}</td>
+                            `;
+                        carData2.appendChild(row);
+                    }
+
+                    // Veri alma süresi göstergesini güncelle
+                    document.getElementById("loadingTimeEf").innerText = "Veri alma süresi: Tamamlandı";
+                }
+            };
+
+            // İsteği gönder
+            xhr.send("keyword=" + keyword);
+        }
+    </script>
+
+</body>
+</html>

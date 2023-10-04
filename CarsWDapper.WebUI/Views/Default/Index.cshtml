@@ -1,6 +1,13 @@
-﻿@{
+﻿@model List<DisplayVehicleResponse>
+
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentPage = ViewBag.CurrentPage ?? 1; 
+    var pageSize = ViewBag.PageSize ?? 5; 
+    var totalItems = ViewBag.TotalItems ?? 0; 
+    var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize); 
+    var itemsToDisplay = Model; 
 }
 
 
@@ -37,4 +44,119 @@
 </div>
 
             @await Component.InvokeAsync("_SearchPartial")
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                EntityFramework Verileri
+            </div>
+
+            <ul class="navbar-nav mr-auto align-items-center">
+                <li class="nav-item">
+                    <form method="get" asp-action="Index" asp-controller="Default" class="search-bar">
+                        <input type="text" class="form-control" style="margin-top: 5px" placeholder="Anahtar kelimeleri girin" name="keyword" value="@ViewBag.Keyword" />
+                        <button type="submit" style="margin-top:3px" class="btn btn-light">Ara</button>
+                    </form>
+                </li>
+            </ul>
+
+            
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Plaka</th>
+                            <th>Model & Marka</th>
+                            <th>Şase Tipi</th>
+                            <th>Yakıt Türü</th>
+                            <th>Vites Tipi</th>
+                            <th>Renk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Plate</td>
+                                <td>@item.Title</td>
+                                <td>@item.CaseType</td>
+                                <td>@item.Fuel</td>
+                                <td>@item.ShiftType</td>
+                                <td>@item.Color</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <style>
+                .pagination-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .pagination {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                }
+
+                    .pagination li {
+                        margin-right: 5px; 
+                    }
+            </style>
+
+            <div class="pagination-container">
+                <ul class="pagination">
+                    @if (ViewBag.TotalPages > 0)
+                    {
+                        @if (ViewBag.CurrentPage >= 2)
+                        {
+                            <li>
+                                <a href="?page=1&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Keyword">First -</a>
+                            </li>
+                        }
+
+                        @for (int i = Math.Max(1, ViewBag.CurrentPage - 5); i <= Math.Min(ViewBag.CurrentPage + 4, ViewBag.TotalPages); i++)
+                        {
+                            <li>
+                                @if (i == ViewBag.CurrentPage)
+                                {
+                                    <span class="active">@i</span>
+                                }
+                                else
+                                {
+                                    <a href="?page=@i&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Keyword">@i</a>
+                                }
+                            </li>
+
+                            @if (i < Math.Min(ViewBag.CurrentPage + 4, ViewBag.TotalPages))
+                            {
+                                <li class="separator">-</li>
+                            }
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li>
+                                <a href="?page=@ViewBag.TotalPages&pageSize=@ViewBag.PageSize&keyword=@ViewBag.Keyword">- Last</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+
+
+
+            
+
+        </div>
+    </div>
+</div>
+
+
 

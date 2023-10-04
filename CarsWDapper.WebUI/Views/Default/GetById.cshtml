@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "GetById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetById</h1>
+
+
+<div class="card mt-3">
+    <div class="card-content">
+        <div class="row row-group m-0">
+
+            @await Component.InvokeAsync("_PopularFuelPartial")
+            @await Component.InvokeAsync("_PopularColorPartial")
+            @await Component.InvokeAsync("_PopularShiftTypePartial")
+            @await Component.InvokeAsync("_PopularCaseTypePartial")
+
+        </div>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-content">
+        <div class="row row-group m-0">
+
+            @await Component.InvokeAsync("_LeastFuelPartial")
+            @await Component.InvokeAsync("_LeastColorPartial")
+            @await Component.InvokeAsync("_LeastShiftTypePartial")
+            @await Component.InvokeAsync("_LeastCaseTypePartial")
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    @await Component.InvokeAsync("_PopularBrandsPartial")
+    @await Component.InvokeAsync("_PopularPlatesPartial")
+</div>
+
+@await Component.InvokeAsync("_SearchPartial")
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                EntityFramework Verileri
+            </div>
+
+            <ul class="navbar-nav mr-auto align-items-center">
+                <li class="nav-item">
+                    <form method="get" asp-action="GetById" asp-controller="Default" class="search-bar">
+                        <input type="text" class="form-control" style="margin-top: 5px" placeholder="Anahtar kelimeleri girin" name="Id" value="@ViewBag.Id" />
+                        <button type="submit" style="margin-top:3px" class="btn btn-light">Ara</button>
+                    </form>
+                </li>
+            </ul>
+
+
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Plaka</th>
+                            <th>Model & Marka</th>
+                            <th>Şase Tipi</th>
+                            <th>Yakıt Türü</th>
+                            <th>Vites Tipi</th>
+                            <th>Renk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Plate</td>
+                                <td>@item.Title</td>
+                                <td>@item.CaseType</td>
+                                <td>@item.Fuel</td>
+                                <td>@item.ShiftType</td>
+                                <td>@item.Color</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div> @ViewBag.timeSpanEf</div>

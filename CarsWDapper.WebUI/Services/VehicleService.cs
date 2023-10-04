@@ -27,7 +27,7 @@ namespace CarsWDapper.WebUI.Services
                     v.CaseType.Contains(keyword) ||
                     v.Color.Contains(keyword));
 
-            var result = await query.Select(v => _mapper.Map<DisplayVehicleResponse>(v)).ToListAsync();
+            var result = await query.Select(v => _mapper.Map<DisplayVehicleResponse>(v)).AsNoTracking().ToListAsync();
 
             return result;
 

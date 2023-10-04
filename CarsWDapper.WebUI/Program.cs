@@ -1,5 +1,7 @@
 using CarsWDapper.WebUI.Context;
 using CarsWDapper.WebUI.Services;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddDbContext<EfContext>();
+builder.Services.AddDbContext<EfContext>(options =>
+{
+    options.EnableServiceProviderCaching(false);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 var app = builder.Build();
 
